@@ -1139,6 +1139,6 @@
 # else:
 #     print("Ничья.")
 
-
+jhcjsdcksdbvks
 
 
