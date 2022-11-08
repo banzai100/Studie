@@ -1026,7 +1026,6 @@
 # print(matrix[1, 0])
 
 
-
 #
 # from random import choice
 #
@@ -1108,7 +1107,7 @@
 #         self.pole[int(h_move[1]) - 1][int(h_move[0]) - 1].value = 1
 #
 #     def computer_go(self):
-#         choice([cell for row in self.pole for cell in row if cell.value == 0]).value = 2
+#         choice([cell for row in self.pole for cell in row if cell]).value = 2
 #
 #
 # # pole = TicTacToe()
@@ -1139,7 +1138,333 @@
 # else:
 #     print("Ничья.")
 
-jhcjsdcksdbvks
-jfkufufuygjygkj
+
+# class Animal:
+#     def __init__(self, name, old):
+#         self.name = name
+#         self.old = old
+#
+#     def get_info(self):
+#         print(self.name + ": " + ', '.join(map(str, list(self.__dict__.values())[1:])))
+#
+#
+# class Cat(Animal):
+#     def __init__(self, name, old, color, weight):
+#         super().__init__(name, old)
+#         self.color = color
+#         self.weight = weight
+#
+#
+# class Dog(Animal):
+#     def __init__(self, name, old, breed, size):
+#         super().__init__(name, old)
+#         self.breed = breed
+#         self.size = size
+#
+#
+# d = Dog('пёс', 4, 'хаски', (2, 3))
+# d.get_info()
+# a = {"1": 1, "2": 2}
+# print(*a.values())
 
 
+# class Thing:
+#     ID = -1
+#
+#     def __init__(self, *args):
+#         self.id = self.get_id()
+#         self.name, self.price, self.weight, self.dims, self.memory, self.frm = args
+#
+#     @staticmethod
+#     def get_id():
+#         Thing.ID += 1
+#         return Thing.ID
+#
+#     def get_data(self):
+#         return tuple(list(self.__dict__.values())[1:])
+#
+#
+# class Table(Thing):
+#     def __init__(self, name, price, weight, dims, memory=None, frm=None):
+#         super().__init__(name, price, weight, dims, memory, frm)
+#
+#
+# class ElBook(Thing):
+#     def __init__(self, name, price, memory, frm, weight=None, dims=None):
+#         super().__init__(name, price, weight, dims, memory, frm)
+#
+#
+# table = Table("Круглый", 1024, 812.55, (700, 750, 700))
+# book = ElBook("Python ООП", 2000, 2048, 'pdf')
+# print(table.get_data())
+# print(table.__dict__)
+#
+# print(book.get_data())
+
+
+# class GenericView:
+#     def __init__(self, methods=('GET',)):
+#         self.methods = methods
+#
+#     def get(self, request):
+#         return ""
+#
+#     def post(self, request):
+#         pass
+#
+#     def put(self, request):
+#         pass
+#
+#     def delete(self, request):
+#         pass
+#
+#
+# class DetailView(GenericView):
+#     def render_request(self, request, method):
+#         if not method in self.methods:
+#             raise TypeError('данный запрос не может быть выполнен')
+#         return self.__getattribute__(method.lower())(request)
+#
+#     def get(self, request):
+#         if not isinstance(request, dict):
+#             raise TypeError('request не является словарем')
+#         if not request.get("url"):
+#             raise TypeError('request не содержит обязательного ключа url')
+#         return f"url: {request['url']}"
+#
+#
+# dv = DetailView()
+# html = dv.render_request({'url': 'https://site.ru/home'}, 'GET')
+# print(html)
+
+
+# class Singleton:
+#     __instance = None
+#     __instance_base = None
+#
+#     def __new__(cls, *args, **kwargs):
+#         if cls == Singleton:
+#             cls.__instance_base = object.__new__(cls)
+#             return cls.__instance_base
+#         if cls.__instance is None:
+#             cls.__instance = object.__new__(cls)
+#         return cls.__instance
+#
+#
+# class Game(Singleton):
+#     def __init__(self, name):
+#         if "name" not in self.__dict__:
+#             self.name = name
+#
+#
+# class Game2(Singleton):
+#     def __init__(self, name):
+#         if "name" not in self.__dict__:
+#             self.name = name
+#
+#
+# game = Game("tictactoe")
+# game2 = Game2("ig")
+# game3 = Game("sjgr")
+# print
+
+
+# class Validator:
+#     def __init__(self, min_value, max_value):
+#         self.min_value = min_value
+#         self.max_value = max_value
+#
+#     def _is_valid(self, data):
+#         return isinstance(data, self.TYPE) and self.min_value <= data <= self.max_value
+#
+#     def __call__(self, data):
+#         if not self._is_valid(data):
+#             raise ValueError('данные не прошли валидацию')
+#         return True
+#
+#
+# class IntegerValidator(Validator):
+#     TYPE = int
+#
+#
+# class FloatValidator(Validator):
+#     TYPE = float
+#
+# integer_validator = IntegerValidator(-10, 10)
+# float_validator = FloatValidator(-1, 1)
+# res1 = integer_validator(10)  # исключение не генерируется (проверка проходит)
+# res2 = float_validator(10)    # исключение ValueError
+
+
+# class Layer:
+#     next_layer = None
+#
+#     def __init__(self):
+#         self.name = "Layer"
+#
+#     def __call__(self, layer):
+#         self.next_layer = layer
+#         return layer
+#
+#
+# class Input(Layer):
+#     def __init__(self, inputs):
+#         super().__init__()
+#         self.inputs = inputs
+#         self.name = "Input"
+#
+#
+# class Dense(Layer):
+#     def __init__(self, inputs, outputs, activation):
+#         super().__init__()
+#         self.name = "Dense"
+#         self.inputs = inputs
+#         self.outputs = outputs
+#         self.activation = activation
+#
+#
+# class NetworkIterator:
+#     def __init__(self, start):
+#         self.start = start
+#
+#     def __iter__(self):
+#         self.obj = self.start
+#         return self
+#
+#     def __next__(self):
+#         if not self.obj:
+#             raise StopIteration
+#         curr, self.obj = self.obj, self.obj.next_layer
+#         return curr
+#
+#
+# network = Input(128)
+# layer = network(Dense(network.inputs, 1024, 'linear'))
+# layer = layer(Dense(layer.inputs, 10, 'softmax'))
+# for x in NetworkIterator(network):
+#     print(x.name)
+
+
+# from operator import add, sub
+#
+#
+# class Vector:
+#     COORD_TYPES = (int, float)
+#     ERROR_MESSAGE = "любыми числами"
+#
+#     def __init__(self, *args):
+#         self._check_coords(args)
+#         self.coord = args
+#
+#     def _calc(self, other, op):
+#         if len(self.coord) != len(other.coord):
+#             raise TypeError('размерности векторов не совпадают')
+#         calc = [op(s, o) for s, o in zip(self.get_coords(), other.get_coords())]
+#         return calc
+#
+#     def get_coords(self):
+#         return self.coord
+#
+#     def _check_coords(self, coords):
+#         if any(type(x) not in self.COORD_TYPES for x in coords):
+#             raise ValueError('координаты должны быть ' + self.ERROR_MESSAGE)
+#         return True
+#
+#     def __add__(self, other):
+#         return Vector(*self._calc(other, add))
+#
+#     def __sub__(self, other):
+#         return Vector(*self._calc(other, sub))
+#
+#
+# class VectorInt(Vector):
+#     COORD_TYPES = (int,)
+#     ERROR_MESSAGE = "целыми числами"
+#
+#     def __add__(self, other):
+#         try:
+#             self._check_coords(other.get_coords())
+#         except ValueError:
+#             return super().__add__(other)
+#         return self.__class__(*super()._calc(other, add))
+#
+#     def __sub__(self, other):
+#         try:
+#             self._check_coords(other.get_coords())
+#         except ValueError:
+#             return super().__sub__(other)
+#         return self.__class__(*super()._calc(other, sub))
+#
+#
+# v1 = VectorInt(1, 2, 3)
+# v2 = Vector(3, 4, 5)
+# v = v1 + v2  # формируется новый вектор (объект класса Vector) с соответствующими координатами
+# v = v1 - v2  # формируется новый вектор (объект класса Vector) с соответствующими координатами
+# print(v.get_coords())
+
+
+# class ListInteger(list):
+#     def __init__(self, lst):
+#         for i in lst:
+#             self._check_data(i)
+#         super().__init__(lst)
+#
+#     @staticmethod
+#     def _check_data(data):
+#         if not isinstance(data, int):
+#             raise TypeError('можно передавать только целочисленные значения')
+#
+#     def __setitem__(self, key, value):
+#         self._check_data(value)
+#         super().__setitem__(key, value)
+#
+#     def append(self, obj):
+#         self._check_data(obj)
+#         super().append(obj)
+#
+#
+# s = ListInteger((1, 2, 3))
+# s[1] = 10
+# s.append(11)
+# s[0] = 10.5  # TypeError
+
+
+# class Thing:
+#     def __init__(self, name, price, weight):
+#         self.name = name
+#         self.price = price
+#         self.weight = weight
+#
+#     def __hash__(self):
+#         return hash((self.name, self.price, self.weight))
+#
+#
+# class DictShop(dict):
+#     def __init__(self, things=None):
+#         things = {} if not things else things
+#         if not isinstance(things, dict):
+#             raise TypeError('аргумент должен быть словарем')
+#         [self._check_keys(key) for key in things]
+#         super().__init__(things)
+#
+#     def __setitem__(self, key, value):
+#         self._check_keys(key)
+#         super().__setitem__(key, value)
+#
+#     @staticmethod
+#     def _check_keys(key):
+#         if not isinstance(key, Thing):
+#             raise TypeError('ключами могут быть только объекты класса Thing')
+#
+#
+# th_1 = Thing('Лыжи', 11000, 1978.55)
+# th_2 = Thing('Книга', 1500, 256)
+# dict_things = DictShop()
+# print(dict_things)
+# dict_things[th_1] = th_1
+# dict_things[th_2] = th_2
+#
+# for x in dict_things:
+#     print(x.name)
+#
+# dict_things[1] = th_1  # исключение TypeError
