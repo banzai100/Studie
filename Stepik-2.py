@@ -1468,3 +1468,190 @@
 #     print(x.name)
 #
 # dict_things[1] = th_1  # исключение TypeError
+
+
+# class Protists:
+#     def __init__(self, name: object, weight: object, old: object) -> object:
+#         self.name = name
+#         self.weight = weight
+#         self.old = old
+#
+#
+# class Plants(Protists):
+#     pass
+#
+#
+# class Animals(Protists):
+#     pass
+#
+#
+# class Mosses(Plants):
+#     pass
+#
+#
+# class Flowering(Plants):
+#     pass
+#
+#
+# class Worms(Animals):
+#     pass
+#
+#
+# class Mammals(Animals):
+#     pass
+#
+#
+# class Human(Mammals):
+#     pass
+#
+#
+# class Monkeys(Mammals):
+#     pass
+#
+#
+# class Monkey(Monkeys):
+#     pass
+#
+#
+# class Person(Human):
+#     pass
+#
+#
+# class Flower(Flowering):
+#     pass
+#
+#
+# class Worm(Worms):
+#     pass
+#
+#
+# lst_objs = [Monkey("мартышка", 30.4, 7), Monkey("шимпанзе", 24.6, 8), Person("Балакирев", 88, 34),
+#             Person("Верховный жрец", 67.5, 45), Flower("Тюльпан", 0.2, 1), Flower("Роза", 0.1, 2),
+#             Worm("червь", 0.01, 1), Worm("червь 2", 0.02, 1)]
+#
+#
+# lst_animals = [obj for obj in lst_objs if isinstance(obj, Animals)]
+# lst_plants = [obj for obj in lst_objs if isinstance(obj, Plants)]
+# lst_mammals = [obj for obj in lst_objs if isinstance(obj, Mammals)]
+
+
+# class Tuple(tuple):
+#     def __add__(self, other):
+#         return Tuple(tuple(self)+tuple(other))
+#
+# t = Tuple([1, 2, 3])
+# print(t)
+# t = Tuple([1, 2, 3])
+# t = t + "Python"
+# print(t)   # (1, 2, 3, 'P', 'y', 't', 'h', 'o', 'n')
+# t = (t + "Python") + "ООП"
+# print(t)
+
+
+# class VideoItem:
+#     def __init__(self, title, descr, path):
+#         self.title = title
+#         self.descr = descr
+#         self.path = path
+#         self.rating = VideoRating()
+#
+#
+# class VideoRating:
+#     def __init__(self):
+#         self.rating = 0
+#
+#     @property
+#     def rating(self):
+#         return self.__rating
+#
+#     @rating.setter
+#     def rating(self, rating):
+#         self._check_rating(rating)
+#         self.__rating = rating
+#
+#     @staticmethod
+#     def _check_rating(rating):
+#         if not 0 <= rating <= 5:
+#             raise ValueError('неверное присваиваемое значение')
+#
+# v = VideoItem('Курс по Python ООП', 'Подробный курс по Python ООР', 'D:/videos/python_oop.mp4')
+# print(v.rating.rating) # 0
+# v.rating.rating = 5
+# print(v.rating.rating) # 5
+# title = v.title
+# descr = v.descr
+# v.rating.rating = 6  # ValueError
+
+
+# class IteratorAttrs:
+#     def __iter__(self):
+#         return iter(self.__dict__.items())
+#
+#
+# class SmartPhone(IteratorAttrs):
+#     def __init__(self, model, size, memory):
+#         self.model = model
+#         self.size = size
+#         self.memory = memory
+#
+#
+# phone = SmartPhone(1,2,3)
+# for attr, value in phone:
+#     print(attr, value)
+
+
+# class Book:
+#     def __init__(self, title, author, pages, year):
+#         self.title = title
+#         self.author = author
+#         self.pages = pages
+#         self.year = year
+#
+#
+# class DigitBook(Book):
+#     def __init__(self, title, author, pages, year, size, frm):
+#         super().__init__(title, author, pages, year)
+#         self.size = size
+#         self.frm = frm
+
+
+# class SellItem:
+#     def __init__(self, name, price):
+#         self.name = name
+#         self.price = price
+#
+#
+# class House(SellItem):
+#     def __init__(self, name, price, material, square):
+#         super().__init__(name, price)
+#         self.material = material
+#         self.square = square
+#
+#
+# class Flat(SellItem):
+#     def __init__(self, name, price, size, rooms):
+#         super().__init__(name, price)
+#         self.size = size
+#         self.rooms = rooms
+#
+#
+# class Land(SellItem):
+#     def __init__(self, name, price, square):
+#         super().__init__(name, price)
+#         self.square = square
+#
+#
+# class Agency:
+#     def __init__(self, name):
+#         self.name = name
+#         self.objects = []
+#
+#     def add_obj(self, obj):
+#         if isinstance(obj, (House, Flat, Land)):
+#             self.objects.append(obj)
+#
+#     def remove_obj(self, obj):
+#         self.objects.remove(obj)
+#
+#     def get_objects(self):
+#         return self.objects
