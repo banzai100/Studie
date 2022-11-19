@@ -1655,3 +1655,262 @@
 #
 #     def get_objects(self):
 #         return self.objects
+
+
+# class Router:
+#     app = {}
+#
+#     @classmethod
+#     def get(cls, path):
+#         return cls.app.get(path)
+#
+#     @classmethod
+#     def add_callback(cls, path, func):
+#         cls.app[path] = func
+#
+#
+# class Callback:
+#     def __init__(self, path, router):
+#         self.path = path
+#         self.router = router
+#
+#     def __call__(self, func):
+#         self.router.add_callback(self.path, func)
+#
+#
+# @Callback('/', Router)
+# def index():
+#     return '<h1>Главная</h1>'
+#
+#
+# route = Router.get('/')
+# if route:
+#     ret = route()
+#     print(ret)
+
+
+# def integer_params(cls):
+#     methods = {k: v for k, v in cls.__dict__.items() if callable(v)}
+#     for k, v in methods.items():
+#         setattr(cls, k, integer_params_decorated(v))
+#
+#     return cls
+#
+#
+# def integer_params_decorated(func):
+#     def wrapper(self, *args, **kwargs):
+#         if not all(isinstance(item, int) for item in args) or kwargs:
+#             raise TypeError("аргументы должны быть целыми числами")
+#         return func(self, *args, **kwargs)
+#
+#     return wrapper
+#
+#
+# @integer_params
+# class Vector:
+#     def __init__(self, *args):
+#         self.__coords = list(args)
+#
+#     def __getitem__(self, item):
+#         return self.__coords[item]
+#
+#     def __setitem__(self, key, value):
+#         self.__coords[key] = value
+#
+#     def set_coords(self, *coords, reverse=False):
+#         c = list(coords)
+#         self.__coords = c if not reverse else c[::-1]
+#
+#
+# vector = Vector(1, 2)
+# # print(vector[1])
+# # vector[1] = 20.4  # TypeError
+# vector.set_coords(1, 2, reverse=True)
+
+
+# class SoftList(list):
+#     def __getitem__(self, item):
+#         if -len(self) <= item < len(self):
+#             return super().__getitem__(item)
+#         return False
+
+
+# class StringDigit(str):
+#     def __init__(self, string):
+#         if not string.isdigit():
+#             raise ValueError("в строке должны быть только цифры")
+#         super().__init__()
+#
+#     def __add__(self, other):
+#         return StringDigit(str(self) + other)
+#
+#     def __radd__(self, other):
+#         return StringDigit(other + str(self))
+#
+#
+# sd = StringDigit("123")
+# sd = sd + "456"  # StringDigit: 123456
+# sd = "789" + sd  # StringDigit: 789123456
+# sd = sd + "12f"  # ValueError
+
+
+# class ItemAttrs(list):
+#     pass
+#
+#
+# class Point(ItemAttrs):
+#     def __init__(self, x, y):
+#         super().__init__([x, y])
+#
+#
+# pt = Point(1, 2.5)
+# x = pt[0]  # 1
+# y = pt[1]  # 2.5
+# pt[0] = 10
+
+
+# class Animal:
+#     def __init__(self, name, kind, old):
+#         self.name = name
+#         self.kind = kind
+#         self.old = old
+#
+#     @property
+#     def name(self):
+#         return self.__name
+#
+#     @name.setter
+#     def name(self, value):
+#         self.__name = value
+#
+#     @property
+#     def kind(self):
+#         return self.__kind
+#
+#     @kind.setter
+#     def kind(self, value):
+#         self.__kind = value
+#
+#     @property
+#     def old(self):
+#         return self.__old
+#
+#     @old.setter
+#     def old(self, value):
+#         self.__old = value
+#
+#
+# animals = [Animal('Васька', 'дворовый кот', 5), Animal('Рекс', 'немецкая овчарка', 8), Animal('Кеша', 'попугай', 3)]
+
+
+# class Furniture:
+#     attrs = ("_name", "_weight")
+#
+#     def __init__(self, *args):
+#         [setattr(self, name, arg) for name, arg in zip(self.attrs, args)]
+#
+#     @staticmethod
+#     def __verify_name(name):
+#         if not isinstance(name, str):
+#             raise TypeError('название должно быть строкой')
+#
+#     @staticmethod
+#     def __verify_weight(weight):
+#         if not isinstance(weight, int) or weight <= 0:
+#             raise TypeError('вес должен быть положительным числом')
+#
+#     def __setattr__(self, key, value):
+#         if key == "_name":
+#             self.__verify_name(value)
+#         if key == "_weight":
+#             self.__verify_weight(value)
+#         super().__setattr__(key, value)
+#
+#     def get_attrs(self):
+#         return tuple(self.__dict__[name] for name in self.attrs)
+#
+#
+# class Closet(Furniture):
+#     attrs = ("_name", "_weight", "_tp", "_doors")
+#
+#
+# class Chair(Furniture):
+#     attr = ("_name", "_weight", "_height")
+#
+#
+# class Table(Furniture):
+#     attrs = ("_name", "_weight", "_height", "_square")
+#
+#
+# fr = Table("jsydf", 10, 57, 37)
+# print(fr.get_attrs())
+# f = Furniture("ksjdgv", 10)
+
+
+class Observer:
+    def update(self, data):
+        pass
+
+    def __hash__(self):
+        return hash(id(self))
+
+
+class Subject:
+    def __init__(self):
+        self.__observers = {}
+        self.__data = None
+
+    def add_observer(self, observer):
+        self.__observers[observer] = observer
+
+    def remove_observer(self, observer):
+        if observer in self.__observers:
+            self.__observers.pop(observer)
+
+    def __notify_observer(self):
+        for ob in self.__observers:
+            ob.update(self.__data)
+
+    def change_data(self, data):
+        self.__data = data
+        self.__notify_observer()
+
+
+class Data:
+    def __init__(self, temp, press, wet):
+        self.temp = temp  # температура
+        self.press = press  # давление
+        self.wet = wet  # влажность
+
+
+class TemperatureView(Observer):
+    pass
+
+
+class PressureView(Observer):
+    pass
+
+
+class WetView(Observer):
+    pass
+
+
+subject = Subject()
+tv = TemperatureView()
+pr = PressureView()
+wet = WetView()
+
+subject.add_observer(tv)
+subject.add_observer(pr)
+subject.add_observer(wet)
+
+# subject.change_data(Data(23, 150, 83))
+# # выведет строчки:
+# # Текущая температура 23
+# # Текущее давление 150
+# # Текущая влажность 83
+# subject.remove_observer(wet)
+# subject.change_data(Data(24, 148, 80))
+# # выведет строчки:
+# # Текущая температура 24
+# # Текущее давление 148
